@@ -16,5 +16,5 @@ Course::Course(const Course& course) {
 }
 
 CourseInstance::CourseInstance(const Course& course) : Course(course) {
-	
+	//deneme
 }
