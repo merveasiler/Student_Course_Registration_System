@@ -1,10 +1,12 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
 
+/*************************** Course ***************************/
 class Course {
 
 protected:
@@ -20,10 +22,13 @@ public:
 	Course(const Course& course);
 
 	void addPrerequisite(const Course& course);
-
+	friend ostream& operator<< (ostream& os, const Course& course);
 };
 
+/*************************** CourseInstance ***************************/
 class CourseInstance : public Course {
+
+	float grade;
 
 public:
 	CourseInstance(const Course& course);
