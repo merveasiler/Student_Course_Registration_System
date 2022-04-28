@@ -10,16 +10,17 @@ class Metu {
 
 	int row_size, column_size;
 	struct triple {
-		int t;
-		int i;
-		int j;
+		int t = -1;
+		int i = 0;
+		int j = 0;
 	};
 
 	struct triple* findStudentInTouchins(int student_id, int t, int i, int j);
-	void addConnection(int from_student_id, int to_student_id, string dir, int t, int i, int j);
+	struct triple* addNewTouchin(triple* index_f, triple* index_t, int from_student_id, int to_student_id, string dir);
+	void combine2TouchinsIntoNewOne(triple* index_f, triple* index_t, string dir, int* shifts);
+	int* computeShifts(triple* index_f, triple* index_t, string dir);
 	void constructNewTouchin();
 	void destructTouchin(int t);
-	void combine2TouchinsIntoNewOne(struct triple* index_f, struct triple* index_t, string dir);
 
 public:
 	Metu();

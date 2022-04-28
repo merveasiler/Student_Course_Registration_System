@@ -25,12 +25,12 @@ int Student::getId() {
 	return id;
 }
 
-Student* Student::getHorizontalTouchIns() {
+Student* Student::getHorizontalTouchins() {
 
 	return horizontal;
 }
 
-Student* Student::getVerticalTouchIns() {
+Student* Student::getVerticalTouchins() {
 
 	return vertical;
 }
@@ -46,7 +46,7 @@ void Student::listCourses() {
 		cout << *courses[i] << endl;
 }
 
-void Student::addTouchIn(Student* student, string dir) {
+void Student::addConnection(Student* student, string dir) {
 
 	if (dir == "-")
 		this->horizontal = student;

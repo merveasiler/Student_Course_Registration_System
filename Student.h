@@ -20,11 +20,11 @@ public:
 	~Student();
 	
 	int getId();
-	Student* getHorizontalTouchIns();
-	Student* getVerticalTouchIns();
+	Student* getHorizontalTouchins();
+	Student* getVerticalTouchins();
 	void addCourse(const Course& course);
 	void listCourses();
-	void addTouchIn(Student* student, string dir);
+	void addConnection(Student* student, string dir);
 	friend ostream& operator<< (ostream& os, const Student& student);
 
 };
