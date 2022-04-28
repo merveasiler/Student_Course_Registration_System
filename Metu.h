@@ -28,7 +28,9 @@ public:
 	Student& getStudent(int id);
 	void registerCourse(const Course& course);
 	void registerStudent(Student& student);
+	void setRegionSize(int row_size, int column_size);
 	void addTouchInfo(int from_student_id, int to_student_id, string dir);
+	void printTouchInfo();
 	void upgradeStudents();
 
 };

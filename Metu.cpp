@@ -38,6 +38,12 @@ void Metu::registerStudent(Student& student) {
 	students.push_back(&student);
 }
 
+void Metu::setRegionSize(int row_size, int column_size) {
+
+	this->row_size = row_size;
+	this->column_size = column_size;
+}
+
 void Metu::addTouchInfo(int from_student_id, int to_student_id, string dir) {
 
 	// find the students in the school list
@@ -188,6 +194,21 @@ void Metu::destructTouchin(int t) {
 	delete group;
 	group = NULL;
 
+}
+
+void Metu::printTouchInfo() {
+
+	int** group = touchins[0];
+
+	for (int i = 0; i < row_size; i++) {
+		for (int j = 0; j < column_size; j++)
+			if (group[i][j] < 0)
+				cout << "X ";
+			else
+				cout << group[i][j] << " ";
+		cout << endl;
+	}
+			
 }
 
 

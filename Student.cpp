@@ -7,8 +7,8 @@ Student::Student(int id, string fullname, string department) {
 	this->fullname = fullname;
 	this->department = department;
 
-	horizontal = NULL;
-	vertical = NULL;
+	this->horizontal = NULL;
+	this->vertical = NULL;
 }
 
 Student::~Student() {

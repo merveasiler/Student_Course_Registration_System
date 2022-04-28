@@ -5,6 +5,8 @@
 #include "Student.h"
 #include "Metu.h"
 
+void testTouchins();
+
 int main()
 {
     Metu metu;
@@ -17,29 +19,48 @@ int main()
     freshman_student->addCourse(*course);
     freshman_student->listCourses();
 
+    testTouchins();
+
+    return 0;
+
 }
 
-void addTouchIns() {
+void testTouchins() {
 
     Metu metu;
 
-    metu.addTouchInfo(18, 35);
-    metu.addTouchInfo(20, 17);
-    metu.addTouchInfo(10, 30);
-    metu.addTouchInfo(80, 100);
-    metu.addTouchInfo(35, 43);
-    metu.addTouchInfo(20, 19);
-    metu.addTouchInfo(65, 26);
-    metu.addTouchInfo(48, 60);
-    metu.addTouchInfo(10, 44);
-    metu.addTouchInfo(10, 12);
-    metu.addTouchInfo(65, 10);
-    metu.addTouchInfo(48, 70);
-    metu.addTouchInfo(20, 18);
-    metu.addTouchInfo(17, 16);
-    metu.addTouchInfo(48, 80);
-    metu.addTouchInfo(18, 42);
-    metu.addTouchInfo(48, 90);
+    metu.setRegionSize(7, 7);
+
+    metu.addTouchInfo(18, 35, "-");
+    metu.addTouchInfo(18, 13, "|");
+    metu.addTouchInfo(7, 19, "|");
+    metu.addTouchInfo(23, 26, "-");
+    metu.addTouchInfo(51, 36, "-");
+    metu.addTouchInfo(36, 47, "-");
+    metu.addTouchInfo(47, 30, "|");
+    metu.addTouchInfo(30, 11, "-");
+    metu.addTouchInfo(82, 80, "-");
+    metu.addTouchInfo(65, 80, "|");
+    metu.addTouchInfo(1, 65, "-");
+    metu.addTouchInfo(12, 13, "-");
+    metu.addTouchInfo(35, 10, "|");
+    metu.addTouchInfo(10, 45, "-");
+    metu.addTouchInfo(19, 20, "-");
+    metu.addTouchInfo(65, 58, "-");
+    metu.addTouchInfo(58, 51, "-");
+    metu.addTouchInfo(32, 49, "-");
+    metu.addTouchInfo(24, 32, "|");
+    metu.addTouchInfo(23, 24, "|");
+    metu.addTouchInfo(12, 26, "|");
+    metu.addTouchInfo(30, 19, "|");
+    metu.addTouchInfo(45, 7, "|");
+    metu.addTouchInfo(7, 3, "-");
+    metu.addTouchInfo(3, 20, "|");
+    metu.addTouchInfo(4, 6, "|");
+    metu.addTouchInfo(2, 6, "-");
+    metu.addTouchInfo(49, 2, "-");
+
+    metu.printTouchInfo();
 
 }
 
