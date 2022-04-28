@@ -5,23 +5,23 @@
 /*************************** Student ***************************/
 class Student {
 
-	Student** horizontal;
-	Student** vertical;
-	vector<CourseInstance*> courses;
-
 protected:
 	int id;
 	string fullname;
 	string department;
 	float gpa;
 
+	Student* horizontal;
+	Student* vertical;
+	vector<CourseInstance*> courses;
+
 public:
 	Student(int id, string fullname, string department);
 	~Student();
 	
 	int getId();
-	Student** getHorizontalTouchIns();
-	Student** getVerticalTouchIns();
+	Student* getHorizontalTouchIns();
+	Student* getVerticalTouchIns();
 	void addCourse(const Course& course);
 	void listCourses();
 	void addTouchIn(Student* student, string dir);

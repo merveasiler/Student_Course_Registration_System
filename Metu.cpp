@@ -50,9 +50,6 @@ void Metu::addTouchInfo(int from_student_id, int to_student_id, string dir) {
 	Student* from_student = & getStudent(from_student_id);
 	Student* to_student = & getStudent(to_student_id);
 
-	// Set the connection
-	from_student->addTouchIn(to_student, dir);
-
 	// Find both students' indices in touch-in groups
 	struct triple* index_f = NULL;
 	struct triple* index_t = NULL;
@@ -66,6 +63,9 @@ void Metu::addTouchInfo(int from_student_id, int to_student_id, string dir) {
 			break;
 	}
 
+	// Set the connection
+	from_student->addTouchIn(to_student, dir);
+
 	// Set the sitting plan
 	if (index_f == NULL && index_t == NULL) {
 		constructNewTouchin();
@@ -73,11 +73,19 @@ void Metu::addTouchInfo(int from_student_id, int to_student_id, string dir) {
 		addConnection(from_student_id, to_student_id, dir, touchins.size()-1, 0, 0);
 	}
 	else if (index_f == NULL) {
-		addConnection(from_student_id, to_student_id, dir, index_t->t, index_t->i, index_t->j);
+		//addConnection(from_student_id, to_student_id, dir, index_t->t, index_t->i, index_t->j);
+		constructNewTouchin();
+		touchins[touchins.size() - 1][0][0] = from_student_id;
+		index_f = new triple(); index_f->t = touchins.size() - 1; index_f->i = 0; index_f->j = 0;
+		combine2TouchinsIntoNewOne(index_f, index_t, dir);
 		delete index_t;
 	}
 	else if (index_t == NULL) {
-		addConnection(from_student_id, to_student_id, dir, index_f->t, index_f->i, index_f->j);
+		//addConnection(from_student_id, to_student_id, dir, index_f->t, index_f->i, index_f->j);
+		constructNewTouchin();
+		touchins[touchins.size() - 1][0][0] = to_student_id;
+		index_t = new triple(); index_t->t = touchins.size() - 1; index_t->i = 0; index_t->j = 0;
+		combine2TouchinsIntoNewOne(index_f, index_t, dir);
 		delete index_f;
 	}
 	else {
@@ -98,12 +106,12 @@ Metu::triple* Metu::findStudentInTouchins(int student_id, int t, int i, int j) {
 		return index;
 	}
 
-	Student* student = &getStudent(touchins[t][i][j]);
-	if (student->getHorizontalTouchIns() != NULL) {
+	Student& student = getStudent(touchins[t][i][j]);
+	if (student.getHorizontalTouchIns() != NULL) {
 		struct triple* index = findStudentInTouchins(student_id, t, i, j + 1);
 		if (index) return index;
 	}
-	if (student->getVerticalTouchIns() != NULL) {
+	if (student.getVerticalTouchIns() != NULL) {
 		struct triple* index = findStudentInTouchins(student_id, t, i + 1, j);
 		if (index) return index;
 	}

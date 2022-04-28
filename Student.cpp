@@ -25,12 +25,12 @@ int Student::getId() {
 	return id;
 }
 
-Student** Student::getHorizontalTouchIns() {
+Student* Student::getHorizontalTouchIns() {
 
 	return horizontal;
 }
 
-Student** Student::getVerticalTouchIns() {
+Student* Student::getVerticalTouchIns() {
 
 	return vertical;
 }
@@ -48,16 +48,10 @@ void Student::listCourses() {
 
 void Student::addTouchIn(Student* student, string dir) {
 
-	if (dir == "-") {
-		if (this->horizontal == NULL)
-			this->horizontal = new Student * ();
-		this->horizontal[0] = student;
-	}
-	else {
-		if (this->vertical == NULL)
-			this->vertical = new Student * ();
-		this->vertical[0] = student;
-	}
+	if (dir == "-")
+		this->horizontal = student;
+	else 
+		this->vertical = student;
 
 }
 
