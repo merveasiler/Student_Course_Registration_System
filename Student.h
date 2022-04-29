@@ -11,8 +11,6 @@ protected:
 	string department;
 	float gpa;
 
-	Student* horizontal;
-	Student* vertical;
 	vector<CourseInstance*> courses;
 
 public:
@@ -20,11 +18,8 @@ public:
 	~Student();
 	
 	int getId();
-	Student* getHorizontalTouchins();
-	Student* getVerticalTouchins();
 	void addCourse(const Course& course);
 	void listCourses();
-	void addConnection(Student* student, string dir);
 	friend ostream& operator<< (ostream& os, const Student& student);
 
 };

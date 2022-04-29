@@ -15,7 +15,7 @@ class Metu {
 		int j = 0;
 	};
 
-	struct triple* findStudentInTouchins(int student_id, int t, int i, int j);
+	struct triple* findStudentInTouchins(int student_id, int t);
 	struct triple* addNewTouchin(triple* index_f, triple* index_t, int from_student_id, int to_student_id, string dir);
 	void combine2TouchinsIntoNewOne(triple* index_f, triple* index_t, string dir, int* shifts);
 	int* computeShifts(triple* index_f, triple* index_t, string dir);

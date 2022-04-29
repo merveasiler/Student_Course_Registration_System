@@ -54,17 +54,13 @@ void Metu::addTouchInfo(int from_student_id, int to_student_id, string dir) {
 	struct triple* index_f = NULL;
 	struct triple* index_t = NULL;
 	for (unsigned int t = 0; t < touchins.size(); t++) {
-		int i = 0, j = 0;
 		if (index_f == NULL)
-			index_f = findStudentInTouchins(from_student_id, t, i, j);
+			index_f = findStudentInTouchins(from_student_id, t);
 		if (index_t == NULL)
-			index_t = findStudentInTouchins(to_student_id, t, i, j);
+			index_t = findStudentInTouchins(to_student_id, t);
 		if (index_f && index_t)
 			break;
 	}
-
-	// Set the connection
-	from_student->addConnection(to_student, dir);
 
 	// Set the sitting plan
 	if (index_f == NULL && index_t == NULL)
@@ -88,27 +84,20 @@ void Metu::addTouchInfo(int from_student_id, int to_student_id, string dir) {
 	delete index_t;
 }
 
-Metu::triple* Metu::findStudentInTouchins(int student_id, int t, int i, int j) {
-	
-	if (touchins[t][i][j] == student_id) {
-		struct triple* index = new triple();
-		index->t = t;
-		index->i = i;
-		index->j = j;
-		return index;
-	}
+Metu::triple* Metu::findStudentInTouchins(int student_id, int t) {
 
-	Student& student = getStudent(touchins[t][i][j]);
-	if (student.getHorizontalTouchins() != NULL) {
-		struct triple* index = findStudentInTouchins(student_id, t, i, j + 1);
-		if (index) return index;
-	}
-	if (student.getVerticalTouchins() != NULL) {
-		struct triple* index = findStudentInTouchins(student_id, t, i + 1, j);
-		if (index) return index;
-	}
-
+	int** group = touchins[t];
+	for (int i = 0; i < row_size; i++)
+		for (int j=0; j<column_size; j++)
+			if (group[i][j] == student_id) {
+				struct triple* index = new triple();
+				index->t = t;
+				index->i = i;
+				index->j = j;
+				return index;
+			}
 	return NULL;
+
 }
 
 Metu::triple* Metu::addNewTouchin(triple* index_f, triple* index_t, int from_student_id, int to_student_id, string dir) {
@@ -132,16 +121,16 @@ Metu::triple* Metu::addNewTouchin(triple* index_f, triple* index_t, int from_stu
 		index_t->i = 0;
 		index_t->j = 0;
 		to_return_index = index_t;
+		if (dir == "-")
+			index_t->j = 1;
+		else
+			index_t->i = 1;
 	}
 
-	if (dir == "-") {
+	if (dir == "-")
 		touchins[t][0][1] = to_student_id;
-		index_t->j = 1;
-	}
-	else {
+	else
 		touchins[t][1][0] = to_student_id;
-		index_t->i = 1;
-	}
 
 	return to_return_index;
 }
@@ -194,11 +183,18 @@ void Metu::combine2TouchinsIntoNewOne(triple* index_f, triple* index_t, string d
 		}
 	}
 
-	destructTouchin(index_f->t);
-	touchins.erase(touchins.begin() + index_f->t);
-
-	destructTouchin(index_t->t - 1);
-	touchins.erase(touchins.begin() + index_t->t - 1);
+	if (index_f->t > index_t->t) {
+		destructTouchin(index_f->t);
+		touchins.erase(touchins.begin() + index_f->t);
+		destructTouchin(index_t->t);
+		touchins.erase(touchins.begin() + index_t->t);
+	}
+	else {
+		destructTouchin(index_t->t);
+		touchins.erase(touchins.begin() + index_t->t);
+		destructTouchin(index_f->t);
+		touchins.erase(touchins.begin() + index_f->t);
+	}
 
 	delete[] shifts;
 
