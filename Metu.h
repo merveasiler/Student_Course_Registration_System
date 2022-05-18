@@ -1,6 +1,16 @@
-#pragma once
+#ifndef __METU_H__
+#define __METU_H__
 
+
+#include "Course.h"
 #include "Student.h"
+
+//////////////////////////////////////////////////////
+//    DO NOT CHANGE *PUBLIC PARTS* IN THIS FILE!    //
+//////////////////////////////////////////////////////
+
+/****************************************************/
+/****                *** METU ***                ****/
 
 class Metu {
 
@@ -32,6 +42,9 @@ public:
 	void setRegionSize(int row_size, int column_size);
 	void addTouchInfo(int from_student_id, int to_student_id, string dir);
 	void printTouchInfo();
-	void upgradeStudents();
+
+	Student& upgradeStudent(Student& student);
 
 };
+
+#endif

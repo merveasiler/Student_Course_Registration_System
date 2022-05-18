@@ -30,7 +30,7 @@ void testTouchins() {
     Metu* metu = new Metu();
 
     for (int i = 1; i <= 100; i++) {
-        Student* student = new Student(i, "Fresh Man", "CENG");
+        Student* student = new Student(i, "Stu Dent", "CENG");
         metu->registerStudent(*student);
     }
  
@@ -86,3 +86,7 @@ void testTouchins() {
     delete metu;
 }
 
+Grade learnGrade(string course_name, int student_id) {
+
+    return NA;
+}

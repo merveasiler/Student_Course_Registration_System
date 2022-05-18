@@ -1,35 +1,82 @@
-#pragma once
+#ifndef __COURSE_H__
+#define __COURSE_H__
+
 
 #include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
+class Student;
 
-/*************************** Course ***************************/
+//////////////////////////////////////////////////////
+//    DO NOT CHANGE *PUBLIC PARTS* IN THIS FILE!    //
+//////////////////////////////////////////////////////
+
+enum Grade {
+	AA,
+	BA,
+	BB,
+	CB,
+	CC,
+	DC,
+	DD,
+	FF,
+	NA,
+	S,
+	U
+};
+
+/****************************************************/
+/****               *** COURSE ***               ****/
 class Course {
 
 protected:
 	
-	string name;
-	vector<const Course*> prerequisites;
+	static string name;
+	static vector<const Course*> prerequisites;
+	static vector<vector<const Student*>> all_course_takers;
 
 public:
-	static int number_of_takers;
-	
-	Course(string name);
+	Course(string name, int term);
 	~Course();
-	Course(const Course& course);
 
 	void addPrerequisite(const Course& course);
-	friend ostream& operator<< (ostream& os, const Course& course);
+	const vector<const Course*> getPrerequisites() const;
+	string getName() const;
+	bool operator== (const Course&) const;
+	//friend ostream& operator<< (ostream& os, const Course& course);
 };
 
-/*************************** CourseInstance ***************************/
-class CourseInstance : public Course {
+/****************************************************/
+/****             *** OPEN COURSE ***            ****/
+class OpenCourse : public Course {
 
-	float grade;
+protected:
+
+	static int term;
+	static int quota;
+	static vector<const Student*> course_takers;
 
 public:
-	CourseInstance(const Course& course);
+	OpenCourse(const Course&, int, int);
+	~OpenCourse();
+
 };
+
+
+/****************************************************/
+/****          *** COURSE INSTANCE ***           ****/
+class CourseInstance : public OpenCourse {
+
+	Grade grade;
+
+public:
+	CourseInstance(const OpenCourse& course, Student& student);
+	void setGrade(Grade);
+	Grade getGrade();
+
+};
+
+#endif
+

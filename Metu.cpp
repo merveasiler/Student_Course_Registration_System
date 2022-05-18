@@ -238,7 +238,7 @@ void Metu::printTouchInfo() {
 }
 
 
-void Metu::upgradeStudents() {
+Student& Metu::upgradeStudent(Student& student) {
 
 }
 
