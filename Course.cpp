@@ -67,12 +67,12 @@ CourseInstance::CourseInstance(const OpenCourse& opencourse, Student& student) :
 
 }
 
-void CourseInstance::setGrade(Grade grade) {
+void CourseInstance::setGrade(enum Grade grade) {
 
 	this->grade = grade;
 }
 
-Grade CourseInstance::getGrade() {
+enum Grade CourseInstance::getGrade() {
 
 	return this->grade;
 }

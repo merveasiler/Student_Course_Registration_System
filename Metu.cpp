@@ -28,15 +28,98 @@ Student& Metu::getStudent(int id) {
 
 }
 
-void Metu::registerCourse(const Course& course) {
-	
-	courses.push_back(&course);
-}
-
 void Metu::registerStudent(Student& student) {
 	
 	students.push_back(&student);
 }
+
+void Metu::registerCourse(const Course& course) {
+
+	courses.push_back(&course);
+}
+
+OpenCourse& Metu::openCourse(const Course& course, int term, int quota, vector<Student*> candidates) {
+
+	OpenCourse* opencourse = new OpenCourse(course, term, quota);
+	courses.push_back(&course);
+
+	int population = 0;
+	for (int turn = 1; turn < 5; turn++) {
+		for (int i = 0; i < candidates.size(); i++) {
+			if (population == quota)
+				break;
+			if (shouldTakeCourse(*candidates[i], turn, *opencourse))
+				population++;
+		}		
+	}
+
+	return *opencourse;
+}
+
+bool Metu::shouldTakeCourse(Student& student, int turn, const OpenCourse& opencourse) {
+
+	return false;
+}
+
+bool Metu::shouldTakeCourse(Freshman& student, int turn, const OpenCourse& opencourse) {
+
+	if (turn == 4)
+		return student.addCourse(opencourse);
+	return false;
+}
+
+bool Metu::shouldTakeCourse(Sophomore& student, int turn, const OpenCourse& opencourse) {
+
+	if (turn == 3)
+		return student.addCourse(opencourse);
+	return false;
+}
+
+bool Metu::shouldTakeCourse(Junior& student, int turn, const OpenCourse& opencourse) {
+
+	if (turn == 2)
+		return student.addCourse(opencourse);
+	return false;
+}
+
+bool Metu::shouldTakeCourse(Senior& student, int turn, const OpenCourse& opencourse) {
+
+	if (turn == 1)
+		return student.addCourse(opencourse);
+	return false;
+}
+
+Student* Metu::upgradeStudent(Student* student) {
+
+	Student* upgradedStudent = upgradeStudentHelper(*student);
+	delete student;
+	student = NULL;
+	return upgradedStudent;
+}
+
+Student* Metu::upgradeStudentHelper(Student& student) {
+
+	return NULL;	// bu fonskiyonun işlevi yok
+}
+
+Sophomore* Metu::upgradeStudentHelper(Freshman& student) {
+
+	Sophomore* upgradedStudent = new Sophomore(student);
+	return upgradedStudent;
+}
+
+Junior* Metu::upgradeStudentHelper(Sophomore& student) {
+
+	Junior* upgradedStudent = new Junior(student);
+	return upgradedStudent;
+}
+
+Senior* Metu::upgradeStudentHelper(Junior& student) {
+
+	Senior* upgradedStudent = new Senior(student);
+	return upgradedStudent;
+}
+
 
 void Metu::setRegionSize(int row_size, int column_size) {
 
@@ -235,11 +318,6 @@ void Metu::printTouchInfo() {
 		cout << endl;
 	}
 			
-}
-
-
-Student& Metu::upgradeStudent(Student& student) {
-
 }
 
 

@@ -18,6 +18,7 @@ class Metu {
 	vector<Student*> students;
 	vector<int**> touchins;
 
+	// extra variables
 	int row_size, column_size;
 	struct triple {
 		int t = -1;
@@ -32,18 +33,31 @@ class Metu {
 	void constructNewTouchin();
 	void destructTouchin(int t);
 
+	bool shouldTakeCourse(Student&, int, const OpenCourse&);
+	bool shouldTakeCourse(Freshman&, int, const OpenCourse&);
+	bool shouldTakeCourse(Sophomore&, int, const OpenCourse&);
+	bool shouldTakeCourse(Junior&, int, const OpenCourse&);
+	bool shouldTakeCourse(Senior&, int, const OpenCourse&);
+
+	Student* upgradeStudentHelper(Student&);
+	Sophomore* upgradeStudentHelper(Freshman&);
+	Junior* upgradeStudentHelper(Sophomore&);
+	Senior* upgradeStudentHelper(Junior&);
+	//
+
 public:
 	Metu();
 	~Metu();
 
-	Student& getStudent(int id);
-	void registerCourse(const Course& course);
-	void registerStudent(Student& student);
+	Student& getStudent(int);
+	void registerStudent(Student&);
+	void registerCourse(const Course&);
+	OpenCourse& openCourse(const Course&, int, int, vector<Student*>);
+	Student* upgradeStudent(Student*);
+
 	void setRegionSize(int row_size, int column_size);
 	void addTouchInfo(int from_student_id, int to_student_id, string dir);
 	void printTouchInfo();
-
-	Student& upgradeStudent(Student& student);
 
 };
 

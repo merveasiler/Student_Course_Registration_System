@@ -86,7 +86,7 @@ void testTouchins() {
     delete metu;
 }
 
-Grade learnGrade(string course_name, int student_id) {
+enum Grade learnGrade(string course_name, int student_id) {
 
     return NA;
 }

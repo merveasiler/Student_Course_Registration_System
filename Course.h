@@ -69,12 +69,12 @@ public:
 /****          *** COURSE INSTANCE ***           ****/
 class CourseInstance : public OpenCourse {
 
-	Grade grade;
+	enum Grade grade;
 
 public:
 	CourseInstance(const OpenCourse& course, Student& student);
-	void setGrade(Grade);
-	Grade getGrade();
+	void setGrade(enum Grade);
+	enum Grade getGrade();
 
 };
 

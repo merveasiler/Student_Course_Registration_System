@@ -8,7 +8,7 @@
 //    DO NOT CHANGE *PUBLIC PARTS* IN THIS FILE!    //
 //////////////////////////////////////////////////////
 
-Grade learnGrade(string course_name, int student_id);
+enum Grade learnGrade(string course_name, int student_id);
 
 /****************************************************/
 /****               *** STUDENT ***              ****/
@@ -24,9 +24,10 @@ protected:
 
 public:
 	Student(int id, string fullname, string department);
-	~Student();	
-	int getId();
-	void listCourses();
+	~Student();
+	Student(const Student&);
+	int getId() const;
+	vector<const CourseInstance*> listCourses();
 	friend ostream& operator<< (ostream& os, const Student& student);
 
 };
@@ -41,6 +42,7 @@ protected:
 public:
 	Freshman(int id, string fullname, string department);
 	~Freshman();
+	Freshman(const Freshman&);
 	bool addCourse(const OpenCourse&);
 	void gradeCourse(CourseInstance& courseInstance);
 
@@ -52,23 +54,27 @@ class Sophomore : public Freshman {
 
 protected:
 	bool internship1;
+	bool internship2;
 
 public:
 	Sophomore(int id, string fullname, string department);
+	Sophomore(const Freshman&);
 	~Sophomore();
-	void doAnInternship();
+	Sophomore(const Sophomore&);
+	void doAnInternship(int);
 };
 
 /****************************************************/
 /****                *** JUNIOR ***              ****/
 class Junior : public Sophomore {
 
-	bool internship2;
 	vector<CourseInstance*> electives;
 
 public:
 	Junior(int id, string fullname, string department);
+	Junior(const Sophomore&);
 	~Junior();
+	Junior(const Junior&);
 	void selectElectiveCourse();
 };
 
@@ -80,7 +86,9 @@ class Senior : public Junior {
 
 public:
 	Senior(int id, string fullname, string department);
+	Senior(const Junior&);
 	~Senior();
+	Senior(const Senior&);
 	bool graduate();
 };
 
