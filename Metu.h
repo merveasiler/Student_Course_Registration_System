@@ -15,6 +15,7 @@
 class Metu {
 
 	vector<const Course*> courses;
+	vector<OpenCourse*> openCourses;
 	vector<Student*> students;
 	vector<int**> touchins;
 
@@ -52,7 +53,7 @@ public:
 	Student& getStudent(int);
 	void registerStudent(Student&);
 	void registerCourse(const Course&);
-	OpenCourse& openCourse(const Course&, int, int, vector<Student*>);
+	OpenCourse& openCourse(const Course&, string, int, vector<Student*>);
 	Student* upgradeStudent(Student*);
 
 	void setRegionSize(int row_size, int column_size);

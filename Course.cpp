@@ -4,7 +4,7 @@
 /****************************************************/
 /****               *** COURSE ***               ****/
 
-Course::Course(string name, int term) {
+Course::Course(string name) {
 	
 	this->name = name;
 }
@@ -13,6 +13,14 @@ Course::~Course() {
 
 	this->prerequisites.clear();
 	this->all_course_takers.clear();
+}
+
+Course::Course(const Course& course) {
+
+	this->name = course.name;
+	for (int i = 0; i < course.prerequisites.size(); i++)
+		this->prerequisites.push_back(course.prerequisites[i]);
+
 }
 
 void Course::addPrerequisite(const Course& course) {
@@ -35,25 +43,43 @@ bool Course::operator== (const Course& rhs) const {
 	return this->name == rhs.name;
 }
 
-/*
-ostream& operator<< (ostream& os, const Course& course) {
-	os << course.name << endl;
-	return os;
-}
-*/
-
 /****************************************************/
 /****             *** OPEN COURSE ***            ****/
 
-OpenCourse::OpenCourse(const Course& course, int term, int quota) : Course(course) {
+OpenCourse::OpenCourse(const Course& course, string term, int course_index, int quota) : Course(course) {
 
 	this->term = term;
+	this->course_index = course_index;
 	this->quota = quota;
+	vector<Student*> this_course_takers;
+	this->all_course_takers.push_back(this_course_takers);
 }
 
 OpenCourse::~OpenCourse() {
 
-	this->course_takers.clear();
+	this->all_course_takers[this->course_index].clear();
+}
+
+OpenCourse::OpenCourse(const OpenCourse& opencourse) : Course(opencourse) {
+
+	this->term = opencourse.term;
+	this->course_index = opencourse.course_index;
+	this->quota = opencourse.quota;
+}
+
+const vector<int> OpenCourse::showStudentList() const {
+
+	vector<int> student_ids;
+	for (int i = 0; i < all_course_takers[this->course_index].size(); i++)
+		student_ids.push_back(all_course_takers[this->course_index][i]->getId());
+	
+	return student_ids;
+}
+
+void OpenCourse::finalize() {
+
+	for (int i = 0; i < all_course_takers[this->course_index].size(); i++)
+		all_course_takers[this->course_index][i]->gradeCourse(*this);
 }
 
 
@@ -63,8 +89,7 @@ OpenCourse::~OpenCourse() {
 CourseInstance::CourseInstance(const OpenCourse& opencourse, Student& student) : OpenCourse(opencourse) {
 	
 	this->grade = NA;
-	this->course_takers.push_back(&student);
-
+	this->all_course_takers[this->course_index].push_back(&student);
 }
 
 void CourseInstance::setGrade(enum Grade grade) {

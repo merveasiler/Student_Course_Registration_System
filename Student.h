@@ -20,6 +20,9 @@ protected:
 	const string department;
 	float gpa;
 
+	int countedCourses;	// just to be used by gradeCourse
+	bool upgraded;	// just to be used by destructor
+
 	vector<CourseInstance*> courses;
 
 public:
@@ -27,8 +30,10 @@ public:
 	~Student();
 	Student(const Student&);
 	int getId() const;
+	float getGPA() const;
 	vector<const CourseInstance*> listCourses();
-	friend ostream& operator<< (ostream& os, const Student& student);
+	void gradeCourse(const OpenCourse& openCourse);
+	void setUpgradeStatus();
 
 };
 
@@ -44,7 +49,6 @@ public:
 	~Freshman();
 	Freshman(const Freshman&);
 	bool addCourse(const OpenCourse&);
-	void gradeCourse(CourseInstance& courseInstance);
 
 };
 
@@ -62,6 +66,7 @@ public:
 	~Sophomore();
 	Sophomore(const Sophomore&);
 	void doAnInternship(int);
+	bool getInternshipStatus(int);
 };
 
 /****************************************************/

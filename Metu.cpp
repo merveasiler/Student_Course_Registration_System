@@ -38,10 +38,10 @@ void Metu::registerCourse(const Course& course) {
 	courses.push_back(&course);
 }
 
-OpenCourse& Metu::openCourse(const Course& course, int term, int quota, vector<Student*> candidates) {
+OpenCourse& Metu::openCourse(const Course& course, string term, int quota, vector<Student*> candidates) {
 
-	OpenCourse* opencourse = new OpenCourse(course, term, quota);
-	courses.push_back(&course);
+	OpenCourse* opencourse = new OpenCourse(course, term, openCourses.size(), quota);
+	openCourses.push_back(opencourse);
 
 	int population = 0;
 	for (int turn = 1; turn < 5; turn++) {
@@ -92,6 +92,7 @@ bool Metu::shouldTakeCourse(Senior& student, int turn, const OpenCourse& opencou
 Student* Metu::upgradeStudent(Student* student) {
 
 	Student* upgradedStudent = upgradeStudentHelper(*student);
+	student->setUpgradeStatus();
 	delete student;
 	student = NULL;
 	return upgradedStudent;

@@ -5,14 +5,19 @@
 
 Student::Student(int _id, string _fullname, string _department) : id(_id), fullname(_fullname), department(_department) {
 
-	this->gpa = 4.0;
+	this->upgraded = false;
+	this->gpa = 100.0;
+	this->countedCourses = 0;
 }
 
 Student::~Student() {
 
-	for (unsigned int i = 0; i < courses.size(); i++) {
-		delete courses[i];
-		courses[i] = NULL;
+	if (upgraded == false) {
+		for (unsigned int i = 0; i < courses.size(); i++) {
+			if (courses[i])
+				delete courses[i];
+			courses[i] = NULL;
+		}
 	}
 	courses.clear();
 }
@@ -21,6 +26,8 @@ Student::~Student() {
 Student::Student(const Student& student) : id(student.id), fullname(student.fullname), department(student.department) {
 
 	this->gpa = student.gpa;
+	this->upgraded = student.upgraded;
+	this->countedCourses = student.countedCourses;
 	for (unsigned int i = 0; i < student.courses.size(); i++) {
 		this->courses.push_back(student.courses[i]);
 	}
@@ -32,6 +39,11 @@ int Student::getId() const {
 	return this->id;
 }
 
+float Student::getGPA() const {
+
+	return this->gpa;
+}
+
 vector<const CourseInstance*> Student::listCourses() {
 	
 	vector<const CourseInstance*> constCourses;
@@ -39,6 +51,23 @@ vector<const CourseInstance*> Student::listCourses() {
 		constCourses.push_back(courses[i]);
 	return constCourses;
 }
+
+void Student::gradeCourse(const OpenCourse& openCourse) {
+
+	for (int i = 0; i < this->courses.size(); i++)
+		if (*this->courses[i] == openCourse) {
+			Grade grade = learnGrade(openCourse.getName(), this->id);
+			this->courses[i]->setGrade(grade);
+			this->gpa = (this->gpa * this->countedCourses + grade) / this->countedCourses++;
+			break;
+		}
+}
+
+void Student::setUpgradeStatus() {
+
+	this->upgraded = true;
+}
+
 
 /****************************************************/
 /****              *** FRESHMAN ***              ****/
@@ -74,11 +103,6 @@ bool Freshman::addCourse(const OpenCourse& opencourse) {
 	return true;
 }
 
-void Freshman::gradeCourse(CourseInstance& courseInstance) {
-
-	courseInstance.setGrade(learnGrade(courseInstance.getName(), this->id));
-}
-
 /****************************************************/
 /****              *** SOPHOMORE ***             ****/
 
@@ -108,18 +132,26 @@ void Sophomore::doAnInternship(int intership_no) {
 
 	if (intership_no == 1) {
 		enum Grade grade = learnGrade("INTERNSHIP-1", this->id);
-		if (grade == S)
+		if (grade >= DD)
 			internship1 = true;
 		else
 			internship1 = false;
 	}
 	else {
 		enum Grade grade = learnGrade("INTERNSHIP-2", this->id);
-		if (grade == S)
+		if (grade >= DD)
 			internship2 = true;
 		else
 			internship2 = false;
 	}
+}
+
+bool Sophomore::getInternshipStatus(int intership_no) {
+
+	if (intership_no == 1)
+		return internship1;
+	else
+		return internship2;
 }
 
 /****************************************************/
