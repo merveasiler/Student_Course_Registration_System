@@ -1,8 +1,11 @@
+#include "Student.h"
 #include "Course.h"
 
 
 /****************************************************/
 /****               *** COURSE ***               ****/
+
+vector<vector<Student*>> Course::all_course_takers;
 
 Course::Course(string name) {
 	

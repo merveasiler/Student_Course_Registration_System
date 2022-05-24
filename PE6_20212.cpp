@@ -9,17 +9,39 @@ void testTouchins();
 
 int main()
 {
-    Metu metu;
-    Course* course = new Course("Programming Languages");
+    Metu* metu = new Metu();
+
+    Course* ceng111 = new Course("Introduction To Computer Engineering Concepts");
+    metu->registerCourse(*ceng111);
+
+    Course* ceng242 = new Course("Programming Languages");
+    ceng242->addPrerequisite(*ceng111);
+    metu->registerCourse(*ceng242);
+
+    vector<Freshman*> freshmans;
     Freshman* freshman_student = new Freshman(1234567, "Fresh Man", "CENG");
+    metu->registerStudent(freshman_student);
+    freshmans.push_back(freshman_student);
 
-    metu.registerCourse(*course);
-    metu.registerStudent(*freshman_student);
+    vector<Sophomore*> sophomores;
+    Sophomore* sophomore_student = new Sophomore(2345671, "Sopho More", "CENG");
+    metu->registerStudent(sophomore_student);
+    sophomores.push_back(sophomore_student);
 
-    freshman_student->addCourse(*course);
-    freshman_student->listCourses();
+    vector<Junior*> juniors;
+    vector<Senior*> seniors;
 
-    testTouchins();
+    OpenCourse& open_ceng111 = metu->openCourse(*ceng111, "20201", 20, freshmans, sophomores, juniors, seniors);
+    OpenCourse& open_ceng242 = metu->openCourse(*ceng242, "20212", 1, freshmans, sophomores, juniors, seniors);
+    
+    cout << "Courses Taken" << endl;
+    for (int i = 0; i < freshman_student->listCourses().size(); i++)
+        cout << freshman_student->listCourses()[i]->getName() << endl;
+
+    Sophomore* upgraded_freshman_student = metu->upgradeStudent(*freshman_student);
+    delete metu;
+
+    //testTouchins();
 
     return 0;
 
@@ -31,7 +53,7 @@ void testTouchins() {
 
     for (int i = 1; i <= 100; i++) {
         Student* student = new Student(i, "Stu Dent", "CENG");
-        metu->registerStudent(*student);
+        metu->registerStudent(student);
     }
  
     /* 

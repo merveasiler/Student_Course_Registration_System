@@ -34,27 +34,20 @@ class Metu {
 	void constructNewTouchin();
 	void destructTouchin(int t);
 
-	bool shouldTakeCourse(Student&, int, const OpenCourse&);
-	bool shouldTakeCourse(Freshman&, int, const OpenCourse&);
-	bool shouldTakeCourse(Sophomore&, int, const OpenCourse&);
-	bool shouldTakeCourse(Junior&, int, const OpenCourse&);
-	bool shouldTakeCourse(Senior&, int, const OpenCourse&);
-
-	Student* upgradeStudentHelper(Student&);
-	Sophomore* upgradeStudentHelper(Freshman&);
-	Junior* upgradeStudentHelper(Sophomore&);
-	Senior* upgradeStudentHelper(Junior&);
-	//
+	void upgradeStudentHelper(Student* oldStudent, Student* newStudent);
 
 public:
 	Metu();
 	~Metu();
 
 	Student& getStudent(int);
-	void registerStudent(Student&);
+	void registerStudent(Student*);
 	void registerCourse(const Course&);
-	OpenCourse& openCourse(const Course&, string, int, vector<Student*>);
-	Student* upgradeStudent(Student*);
+	OpenCourse& openCourse(const Course& course, string term, int quota, vector<Freshman*>, vector<Sophomore*>, vector<Junior*>, vector<Senior*>);
+
+	Sophomore* upgradeStudent(Freshman&);
+	Junior* upgradeStudent(Sophomore&);
+	Senior* upgradeStudent(Junior&);
 
 	void setRegionSize(int row_size, int column_size);
 	void addTouchInfo(int from_student_id, int to_student_id, string dir);

@@ -7,11 +7,8 @@
 #include <vector>
 
 using namespace std;
-class Student { 
-public: 
-	int getId() const;
-	void gradeCourse(const OpenCourse& openCourse);
-};
+
+class Student;
 
 //////////////////////////////////////////////////////
 //    DO NOT CHANGE *PUBLIC PARTS* IN THIS FILE!    //
@@ -50,6 +47,7 @@ public:
 	bool operator== (const Course&) const;
 
 };
+
 
 /****************************************************/
 /****             *** OPEN COURSE ***            ****/

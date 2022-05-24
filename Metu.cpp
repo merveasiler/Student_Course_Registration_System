@@ -12,8 +12,15 @@ Metu::~Metu() {
 	}
 	courses.clear();
 
+	for (unsigned int i = 0; i < openCourses.size(); i++) {
+		delete openCourses[i];
+		openCourses[i] = NULL;
+	}
+	openCourses.clear();
+
 	for (unsigned int i = 0; i < students.size(); i++) {
-		delete students[i];
+		if (students[i])
+			delete students[i];
 		students[i] = NULL;
 	}
 	students.clear();
@@ -25,12 +32,11 @@ Student& Metu::getStudent(int id) {
 	for (unsigned int i = 0; i < students.size(); i++)
 		if (students[i]->getId() == id)
 			return *students[i];
-
 }
 
-void Metu::registerStudent(Student& student) {
+void Metu::registerStudent(Student* student) {
 	
-	students.push_back(&student);
+	students.push_back(student);
 }
 
 void Metu::registerCourse(const Course& course) {
@@ -38,86 +44,72 @@ void Metu::registerCourse(const Course& course) {
 	courses.push_back(&course);
 }
 
-OpenCourse& Metu::openCourse(const Course& course, string term, int quota, vector<Student*> candidates) {
+OpenCourse& Metu::openCourse(const Course& course, string term, int quota, 
+							vector<Freshman*> freshmans, vector<Sophomore*> sophomores, vector<Junior*> juniors, vector<Senior*> seniors) {
 
 	OpenCourse* opencourse = new OpenCourse(course, term, openCourses.size(), quota);
 	openCourses.push_back(opencourse);
 
 	int population = 0;
-	for (int turn = 1; turn < 5; turn++) {
-		for (int i = 0; i < candidates.size(); i++) {
-			if (population == quota)
-				break;
-			if (shouldTakeCourse(*candidates[i], turn, *opencourse))
-				population++;
-		}		
+	for (int i = 0; i < seniors.size(); i++) {
+		if (population == quota)
+			break;
+		if(seniors[i]->addCourse(*opencourse))
+			population++;
+	}
+	for (int i = 0; i < juniors.size(); i++) {
+		if (population == quota)
+			break;
+		if (juniors[i]->addCourse(*opencourse))
+			population++;
+	}
+	for (int i = 0; i < sophomores.size(); i++) {
+		if (population == quota)
+			break;
+		if (sophomores[i]->addCourse(*opencourse))
+			population++;
+	}
+	for (int i = 0; i < freshmans.size(); i++) {
+		if (population == quota)
+			break;
+		if (freshmans[i]->addCourse(*opencourse))
+			population++;
 	}
 
 	return *opencourse;
 }
 
-bool Metu::shouldTakeCourse(Student& student, int turn, const OpenCourse& opencourse) {
+void Metu::upgradeStudentHelper(Student* oldStudent, Student* newStudent) {
 
-	return false;
+	for (unsigned int i = 0; i < students.size(); i++)
+		if (students[i]->getId() == oldStudent->getId()) {
+			students[i] = newStudent;
+			break;
+		}
+
+	oldStudent->setUpgradeStatus();
+	delete oldStudent;
+	oldStudent = NULL;
 }
 
-bool Metu::shouldTakeCourse(Freshman& student, int turn, const OpenCourse& opencourse) {
-
-	if (turn == 4)
-		return student.addCourse(opencourse);
-	return false;
-}
-
-bool Metu::shouldTakeCourse(Sophomore& student, int turn, const OpenCourse& opencourse) {
-
-	if (turn == 3)
-		return student.addCourse(opencourse);
-	return false;
-}
-
-bool Metu::shouldTakeCourse(Junior& student, int turn, const OpenCourse& opencourse) {
-
-	if (turn == 2)
-		return student.addCourse(opencourse);
-	return false;
-}
-
-bool Metu::shouldTakeCourse(Senior& student, int turn, const OpenCourse& opencourse) {
-
-	if (turn == 1)
-		return student.addCourse(opencourse);
-	return false;
-}
-
-Student* Metu::upgradeStudent(Student* student) {
-
-	Student* upgradedStudent = upgradeStudentHelper(*student);
-	student->setUpgradeStatus();
-	delete student;
-	student = NULL;
-	return upgradedStudent;
-}
-
-Student* Metu::upgradeStudentHelper(Student& student) {
-
-	return NULL;	// bu fonskiyonun iþlevi yok
-}
-
-Sophomore* Metu::upgradeStudentHelper(Freshman& student) {
+Sophomore* Metu::upgradeStudent(Freshman& student) {
 
 	Sophomore* upgradedStudent = new Sophomore(student);
+	upgradeStudentHelper(&student, upgradedStudent);
 	return upgradedStudent;
 }
 
-Junior* Metu::upgradeStudentHelper(Sophomore& student) {
+Junior* Metu::upgradeStudent(Sophomore& student) {
 
 	Junior* upgradedStudent = new Junior(student);
+	upgradeStudentHelper(&student, upgradedStudent);
 	return upgradedStudent;
 }
 
-Senior* Metu::upgradeStudentHelper(Junior& student) {
+Senior* Metu::upgradeStudent(Junior& student) {
 
 	Senior* upgradedStudent = new Senior(student);
+	upgradeStudentHelper(&student, upgradedStudent);
 	return upgradedStudent;
 }
 

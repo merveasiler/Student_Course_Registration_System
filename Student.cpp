@@ -202,5 +202,6 @@ Senior::Senior(const Senior& senior) : Junior(senior) {
 
 bool Senior::graduate() {
 
+	return true;
 }
 
