@@ -5,7 +5,7 @@
 #include "Student.h"
 #include "Metu.h"
 
-void testTouchins();
+void testSeatingPlan();
 
 int main()
 {
@@ -41,13 +41,13 @@ int main()
     Sophomore* upgraded_freshman_student = metu->upgradeStudent(*freshman_student);
     delete metu;
 
-    //testTouchins();
+    //testSeatingPlan();
 
     return 0;
 
 }
 
-void testTouchins() {
+void testSeatingPlan() {
 
     Metu* metu = new Metu();
 
@@ -58,52 +58,52 @@ void testTouchins() {
  
     /* 
     //        TEST-1
-     metu->setRegionSize(3, 6);
-    metu->addTouchInfo(18, 35, "-");
-    metu->addTouchInfo(18, 13, "|");
-    metu->addTouchInfo(35, 36, "-");
-    metu->addTouchInfo(36, 47, "-");
-    metu->addTouchInfo(47, 30, "|");
-    metu->addTouchInfo(30, 11, "-");
-    metu->addTouchInfo(82, 80, "-");
-    metu->addTouchInfo(65, 80, "|");
-    metu->addTouchInfo(1, 65, "-");
-    metu->addTouchInfo(12, 13, "-");
-    metu->addTouchInfo(35, 1, "|");
+     metu->setClassroomSize(3, 6);
+    metu->addCheatInfo(18, 35, "-");
+    metu->addCheatInfo(18, 13, "|");
+    metu->addCheatInfo(35, 36, "-");
+    metu->addCheatInfo(36, 47, "-");
+    metu->addCheatInfo(47, 30, "|");
+    metu->addCheatInfo(30, 11, "-");
+    metu->addCheatInfo(82, 80, "-");
+    metu->addCheatInfo(65, 80, "|");
+    metu->addCheatInfo(1, 65, "-");
+    metu->addCheatInfo(12, 13, "-");
+    metu->addCheatInfo(35, 1, "|");
     */
 
-    metu->setRegionSize(7, 7);
-    metu->addTouchInfo(18, 35, "-");
-    metu->addTouchInfo(18, 13, "|");
-    metu->addTouchInfo(7, 19, "|");
-    metu->addTouchInfo(23, 26, "-");
-    metu->addTouchInfo(51, 36, "-");
-    metu->addTouchInfo(36, 47, "-");
-    metu->addTouchInfo(47, 30, "|");
-    metu->addTouchInfo(30, 11, "-");
-    metu->addTouchInfo(82, 80, "-");
-    metu->addTouchInfo(65, 80, "|");
-    metu->addTouchInfo(1, 65, "-");
-    metu->addTouchInfo(12, 13, "-");
-    metu->addTouchInfo(35, 10, "|");
-    metu->addTouchInfo(10, 45, "-");
-    metu->addTouchInfo(19, 20, "-");
-    metu->addTouchInfo(65, 58, "-");
-    metu->addTouchInfo(58, 51, "-");
-    metu->addTouchInfo(32, 49, "-");
-    metu->addTouchInfo(24, 32, "|");
-    metu->addTouchInfo(23, 24, "|");
-    metu->addTouchInfo(12, 26, "|");
-    metu->addTouchInfo(30, 29, "|");
-    metu->addTouchInfo(45, 7, "|");
-    metu->addTouchInfo(7, 3, "-");
-    metu->addTouchInfo(4, 6, "|");
-    metu->addTouchInfo(2, 6, "-");
-    metu->addTouchInfo(49, 2, "-");
-    metu->addTouchInfo(51, 39, "|");
-    metu->addTouchInfo(39, 35, "|");
+    metu->setClassroomSize(7, 7);
+    metu->addCheatInfo(18, 35, "-");
+    metu->addCheatInfo(18, 13, "|");
+    metu->addCheatInfo(7, 19, "|");
+    metu->addCheatInfo(23, 26, "-");
+    metu->addCheatInfo(51, 36, "-");
+    metu->addCheatInfo(36, 47, "-");
+    metu->addCheatInfo(47, 30, "|");
+    metu->addCheatInfo(30, 11, "-");
+    metu->addCheatInfo(82, 80, "-");
+    metu->addCheatInfo(65, 80, "|");
+    metu->addCheatInfo(1, 65, "-");
+    metu->addCheatInfo(12, 13, "-");
+    metu->addCheatInfo(35, 10, "|");
+    metu->addCheatInfo(10, 45, "-");
+    metu->addCheatInfo(19, 20, "-");
+    metu->addCheatInfo(65, 58, "-");
+    metu->addCheatInfo(58, 51, "-");
+    metu->addCheatInfo(32, 49, "-");
+    metu->addCheatInfo(24, 32, "|");
+    metu->addCheatInfo(23, 24, "|");
+    metu->addCheatInfo(12, 26, "|");
+    metu->addCheatInfo(30, 29, "|");
+    metu->addCheatInfo(45, 7, "|");
+    metu->addCheatInfo(7, 3, "-");
+    metu->addCheatInfo(4, 6, "|");
+    metu->addCheatInfo(2, 6, "-");
+    metu->addCheatInfo(49, 2, "-");
+    metu->addCheatInfo(51, 39, "|");
+    metu->addCheatInfo(39, 35, "|");
     
-    metu->printTouchInfo();
+    metu->printSeatingPlan();
 
     delete metu;
 }

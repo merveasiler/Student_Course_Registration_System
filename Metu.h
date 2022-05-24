@@ -19,7 +19,9 @@ class Metu {
 	vector<Student*> students;
 	vector<int**> touchins;
 
-	// extra variables
+	// extra members
+	void upgradeStudentHelper(Student* oldStudent, Student* newStudent);
+
 	int row_size, column_size;
 	struct triple {
 		int t = -1;
@@ -27,14 +29,12 @@ class Metu {
 		int j = 0;
 	};
 
-	struct triple* findStudentInTouchins(int student_id, int t);
-	struct triple* addNewTouchin(triple* index_f, triple* index_t, int from_student_id, int to_student_id, string dir);
-	void combine2TouchinsIntoNewOne(triple* index_f, triple* index_t, string dir, int* shifts);
-	int* computeShifts(triple* index_f, triple* index_t, string dir);
+	struct triple* findStudentInTouchins(int, int);
+	struct triple* addNewTouchin(triple*, triple*, int, int, string);
+	void combine2TouchinsIntoNewOne(triple*, triple*, string, int*);
+	int* computeShifts(triple*, triple*, string);
 	void constructNewTouchin();
-	void destructTouchin(int t);
-
-	void upgradeStudentHelper(Student* oldStudent, Student* newStudent);
+	void destructTouchin(int);
 
 public:
 	Metu();
@@ -43,15 +43,15 @@ public:
 	Student& getStudent(int);
 	void registerStudent(Student*);
 	void registerCourse(const Course&);
-	OpenCourse& openCourse(const Course& course, string term, int quota, vector<Freshman*>, vector<Sophomore*>, vector<Junior*>, vector<Senior*>);
+	OpenCourse& openCourse(const Course&, string, int, vector<Freshman*>, vector<Sophomore*>, vector<Junior*>, vector<Senior*>);
 
 	Sophomore* upgradeStudent(Freshman&);
 	Junior* upgradeStudent(Sophomore&);
 	Senior* upgradeStudent(Junior&);
 
-	void setRegionSize(int row_size, int column_size);
-	void addTouchInfo(int from_student_id, int to_student_id, string dir);
-	void printTouchInfo();
+	void setClassroomSize(int, int);
+	void addCheatInfo(int, int, string);
+	void printSeatingPlan();
 
 };
 

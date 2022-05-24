@@ -37,11 +37,11 @@ protected:
 	static vector<vector<Student*>> all_course_takers;
 
 public:
-	Course(string name);
+	Course(string);
 	~Course();
 	Course(const Course&);
 
-	void addPrerequisite(const Course& course);
+	void addPrerequisite(const Course&);
 	const vector<const Course*> getPrerequisites() const;
 	string getName() const;
 	bool operator== (const Course&) const;
@@ -76,7 +76,8 @@ class CourseInstance : public OpenCourse {
 	enum Grade grade;
 
 public:
-	CourseInstance(const OpenCourse& course, Student& student);
+	CourseInstance(const OpenCourse&, Student&);
+	~CourseInstance();
 	void setGrade(enum Grade);
 	enum Grade getGrade();
 

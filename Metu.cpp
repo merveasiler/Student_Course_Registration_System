@@ -1,9 +1,19 @@
 #include "Metu.h"
 
+/****************************************************/
+/****                *** METU ***                ****/
+
+/* Constructor : Initialize your own variables if you
+   need.
+*/
 Metu::Metu() {
 
 }
 
+/* Destructor  : It is responsible of the destruction of
+   the Course and OpenCourse objects and the registered
+   students.
+*/
 Metu::~Metu() {
 
 	for (unsigned int i = 0; i < courses.size(); i++) {
@@ -27,6 +37,10 @@ Metu::~Metu() {
 
 }
 
+/* This method returns the student whose id is given
+   in the argument. You need to find the corresponding
+   student among the registered students.
+*/
 Student& Metu::getStudent(int id) {
 	
 	for (unsigned int i = 0; i < students.size(); i++)
@@ -34,16 +48,41 @@ Student& Metu::getStudent(int id) {
 			return *students[i];
 }
 
+/* This method directly adds (without creating a copy)
+   the given student to the list of registered students.
+*/
 void Metu::registerStudent(Student* student) {
 	
 	students.push_back(student);
 }
 
+/* This method directly adds (without creating a copy)
+   the given course to the list of base course objects
+   (not among the derived ones).
+*/
 void Metu::registerCourse(const Course& course) {
 
 	courses.push_back(&course);
 }
 
+/* This method constructs a new OpenCourse object by deriving
+   from the Course object given in the first argument and
+   using the <term> and <quota> values given in the second
+   and third arguments, respectively.
+   Also, for each student given in the corresponding lists as
+   function arguments, the newly created OpenCourse is tried 
+   to be added in order.
+   Note that the priority order is given from greater to less
+   as follows: Seniors > Juniors > Sophomores > Freshmans.
+   After the priority ordering, you should try to add the
+   course for each student of the same type in the order inside
+   the corresponding list.
+   Also, during the course addition, you should take the course
+   quota in consider.
+   In the end, there may be left the students who could not add
+   the course because of the quota or the course prerequisite.
+   Finally, you should return the created OpenCourse object.
+*/
 OpenCourse& Metu::openCourse(const Course& course, string term, int quota, 
 							vector<Freshman*> freshmans, vector<Sophomore*> sophomores, vector<Junior*> juniors, vector<Senior*> seniors) {
 
@@ -79,6 +118,53 @@ OpenCourse& Metu::openCourse(const Course& course, string term, int quota,
 	return *opencourse;
 }
 
+/* This method upgrades the given Freshman object to
+   the Sophomore status by constructing a new Sophomore
+   object with the properties of the given Freshman.
+   You should delete the given Freshman and place the 
+   newly created Sophomore object to its location in the 
+   students array of Metu object.
+   In the end, you should return the created Sophomore.
+*/
+Sophomore* Metu::upgradeStudent(Freshman& student) {
+
+	Sophomore* upgradedStudent = new Sophomore(student);
+	upgradeStudentHelper(&student, upgradedStudent);
+	return upgradedStudent;
+}
+
+/* This method upgrades the given Sophomore object to
+   the Junior status by constructing a new Junior
+   object with the properties of the given Sophomore.
+   You should delete the given Sophomore and place the
+   newly created Junior object to its location in the
+   students array of Metu object.
+   In the end, you should return the created Junior.
+*/
+Junior* Metu::upgradeStudent(Sophomore& student) {
+
+	Junior* upgradedStudent = new Junior(student);
+	upgradeStudentHelper(&student, upgradedStudent);
+	return upgradedStudent;
+}
+
+/* This method upgrades the given Junior object to
+   the Senior status by constructing a new Senior
+   object with the properties of the given Junior.
+   You should delete the given Junior and place the
+   newly created Senior object to its location in the
+   students array of Metu object.
+   In the end, you should return the created Senior.
+*/
+Senior* Metu::upgradeStudent(Junior& student) {
+
+	Senior* upgradedStudent = new Senior(student);
+	upgradeStudentHelper(&student, upgradedStudent);
+	return upgradedStudent;
+}
+
+/* My own method.
+*/
 void Metu::upgradeStudentHelper(Student* oldStudent, Student* newStudent) {
 
 	for (unsigned int i = 0; i < students.size(); i++)
@@ -92,35 +178,29 @@ void Metu::upgradeStudentHelper(Student* oldStudent, Student* newStudent) {
 	oldStudent = NULL;
 }
 
-Sophomore* Metu::upgradeStudent(Freshman& student) {
-
-	Sophomore* upgradedStudent = new Sophomore(student);
-	upgradeStudentHelper(&student, upgradedStudent);
-	return upgradedStudent;
-}
-
-Junior* Metu::upgradeStudent(Sophomore& student) {
-
-	Junior* upgradedStudent = new Junior(student);
-	upgradeStudentHelper(&student, upgradedStudent);
-	return upgradedStudent;
-}
-
-Senior* Metu::upgradeStudent(Junior& student) {
-
-	Senior* upgradedStudent = new Senior(student);
-	upgradeStudentHelper(&student, upgradedStudent);
-	return upgradedStudent;
-}
-
-
-void Metu::setRegionSize(int row_size, int column_size) {
+/* This method sets the number of rows and number of columns in a
+   standard Metu classroom with the given arguments, respectively.
+*/
+void Metu::setClassroomSize(int row_size, int column_size) {
 
 	this->row_size = row_size;
 	this->column_size = column_size;
 }
 
-void Metu::addTouchInfo(int from_student_id, int to_student_id, string dir) {
+/* This method tries to construct the 2D seating plan by using
+   the given information as function argument one-by-one.
+   The information consists of 2 integers and 1 string argument.
+   The string parameter can be either "|" or "-".
+   If it is "|", then it means location of the student whose id 
+   given in the first argument is <row_id, column_id> whereas
+   location of the student whose id given in the second argument
+   is <row_id + 1, column_id>.
+   If it is "-", then it means location of the student whose id 
+   given in the first argument is <row_id, column_id> whereas
+   location of the student whose id given in the second argument
+   is <row_id, column_id + 1>.
+*/
+void Metu::addCheatInfo(int from_student_id, int to_student_id, string dir) {
 
 	// find the students in the school list
 	Student* from_student = & getStudent(from_student_id);
@@ -160,6 +240,33 @@ void Metu::addTouchInfo(int from_student_id, int to_student_id, string dir) {
 	delete index_t;
 }
 
+/* This method prints the given seating plan, in
+   other words the 2D array. Between each seat,
+   print an empty space, i.e. " " character.
+   Also, put an empty space to the end of each row.
+   After each row (including the last one), print a
+   new line, i.e. "\n" character.
+   For the empty seats, print a "X" character (uppercase).
+   For non-empty seats, print the id of the student
+   sitting there.
+*/
+void Metu::printSeatingPlan() {
+
+	int** group = touchins[0];
+
+	for (int i = 0; i < row_size; i++) {
+		for (int j = 0; j < column_size; j++)
+			if (group[i][j] < 0)
+				cout << "X ";
+			else
+				cout << group[i][j] << " ";
+		cout << endl;
+	}
+
+}
+
+/* My own method.
+*/
 Metu::triple* Metu::findStudentInTouchins(int student_id, int t) {
 
 	int** group = touchins[t];
@@ -176,6 +283,8 @@ Metu::triple* Metu::findStudentInTouchins(int student_id, int t) {
 
 }
 
+/* My own method.
+*/
 Metu::triple* Metu::addNewTouchin(triple* index_f, triple* index_t, int from_student_id, int to_student_id, string dir) {
 	
 	constructNewTouchin();
@@ -211,6 +320,8 @@ Metu::triple* Metu::addNewTouchin(triple* index_f, triple* index_t, int from_stu
 	return to_return_index;
 }
 
+/* My own method.
+*/
 int* Metu::computeShifts(triple* index_f, triple* index_t, string dir) {
 
 	int row_shift_f = 0, row_shift_t = 0;
@@ -241,6 +352,8 @@ int* Metu::computeShifts(triple* index_f, triple* index_t, string dir) {
 	return shifts;
 }
 
+/* My own method.
+*/
 void Metu::combine2TouchinsIntoNewOne(triple* index_f, triple* index_t, string dir, int* shifts) {
 
 	constructNewTouchin();
@@ -276,6 +389,8 @@ void Metu::combine2TouchinsIntoNewOne(triple* index_f, triple* index_t, string d
 
 }
 
+/* My own method.
+*/
 void Metu::constructNewTouchin() {
 	int** new_group = new int* [row_size];
 	for (int i = 0; i < row_size; i++) {
@@ -286,6 +401,8 @@ void Metu::constructNewTouchin() {
 	touchins.push_back(new_group);
 }
 
+/* My own method.
+*/
 void Metu::destructTouchin(int t) {
 
 	int** group = touchins[t];
@@ -298,20 +415,6 @@ void Metu::destructTouchin(int t) {
 
 }
 
-void Metu::printTouchInfo() {
-
-	int** group = touchins[0];
-
-	for (int i = 0; i < row_size; i++) {
-		for (int j = 0; j < column_size; j++)
-			if (group[i][j] < 0)
-				cout << "X ";
-			else
-				cout << group[i][j] << " ";
-		cout << endl;
-	}
-			
-}
 
 
 

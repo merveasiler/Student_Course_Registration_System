@@ -73,10 +73,8 @@ public:
 /****                *** JUNIOR ***              ****/
 class Junior : public Sophomore {
 
-	vector<CourseInstance*> electives;
-
 public:
-	Junior(int id, string fullname, string department);
+	Junior(int, string, string);
 	Junior(const Sophomore&);
 	~Junior();
 	Junior(const Junior&);
@@ -87,10 +85,8 @@ public:
 /****                *** SENIOR ***              ****/
 class Senior : public Junior {
 
-	bool graduation;
-
 public:
-	Senior(int id, string fullname, string department);
+	Senior(int, string, string);
 	Senior(const Junior&);
 	~Senior();
 	Senior(const Senior&);
