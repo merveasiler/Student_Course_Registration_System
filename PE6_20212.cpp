@@ -6,8 +6,28 @@
 #include "Metu.h"
 
 void testSeatingPlan();
+void scenario1();
 
-int main()
+int main() {
+
+    Metu* metu = new Metu();
+    vector<Freshman*> freshmans;
+    vector<Sophomore*> sophomores;
+    vector<Junior*> juniors;
+    vector<Senior*> seniors;
+
+    Course* ceng242 = new Course("Programming Languages");  // define base course
+    metu->registerCourse(*ceng242);
+
+
+
+    OpenCourse& open_ceng242 = metu->openCourse(*ceng242, "20212", 1, freshmans, sophomores, juniors, seniors);
+
+    return 0;
+}
+
+
+void scenario1()
 {
     Metu* metu = new Metu();
 
@@ -40,10 +60,6 @@ int main()
 
     Sophomore* upgraded_freshman_student = metu->upgradeStudent(*freshman_student);
     delete metu;
-
-    //testSeatingPlan();
-
-    return 0;
 
 }
 

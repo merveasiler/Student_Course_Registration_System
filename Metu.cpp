@@ -82,6 +82,12 @@ void Metu::registerCourse(const Course& course) {
    In the end, there may be left the students who could not add
    the course because of the quota or the course prerequisite.
    Finally, you should return the created OpenCourse object.
+
+   By the way; of course it would be nicer to define
+   this method in "virtual" in order to use it for different
+   types of Students. However, we do not want to test
+   you with "virtual" keyword in this PE. We've left it
+   to next PE.
 */
 OpenCourse& Metu::openCourse(const Course& course, string term, int quota, 
 							vector<Freshman*> freshmans, vector<Sophomore*> sophomores, vector<Junior*> juniors, vector<Senior*> seniors) {
@@ -125,6 +131,12 @@ OpenCourse& Metu::openCourse(const Course& course, string term, int quota,
    newly created Sophomore object to its location in the 
    students array of Metu object.
    In the end, you should return the created Sophomore.
+
+   By the way; of course it would be nicer to define 
+   this method in "virtual" in order to use it for different 
+   types of Students. However, we do not want to test 
+   you with "virtual" keyword in this PE. We've left it 
+   to next PE.
 */
 Sophomore* Metu::upgradeStudent(Freshman& student) {
 
@@ -140,6 +152,12 @@ Sophomore* Metu::upgradeStudent(Freshman& student) {
    newly created Junior object to its location in the
    students array of Metu object.
    In the end, you should return the created Junior.
+
+   By the way; of course it would be nicer to define
+   this method in "virtual" in order to use it for different
+   types of Students. However, we do not want to test
+   you with "virtual" keyword in this PE. We've left it
+   to next PE.
 */
 Junior* Metu::upgradeStudent(Sophomore& student) {
 
@@ -155,6 +173,12 @@ Junior* Metu::upgradeStudent(Sophomore& student) {
    newly created Senior object to its location in the
    students array of Metu object.
    In the end, you should return the created Senior.
+
+   By the way; of course it would be nicer to define
+   this method in "virtual" in order to use it for different
+   types of Students. However, we do not want to test
+   you with "virtual" keyword in this PE. We've left it
+   to next PE.
 */
 Senior* Metu::upgradeStudent(Junior& student) {
 
